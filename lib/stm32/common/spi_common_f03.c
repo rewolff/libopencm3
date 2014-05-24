@@ -109,6 +109,11 @@ int spi_init_master(uint32_t spi, uint32_t br, uint32_t cpol, uint32_t cpha,
 
 	SPI_CR1(spi) = reg32;
 
+	// The STM32F[124] module uses an 8-bit RX threshold, set it to
+	// be compatible. The Default that ST chose is not good as it
+	// changes behaviour.
+	SPI_CR2(spi) |= SPI_CR2_FRXTH;
+
 	return 0; /* TODO */
 }
 
